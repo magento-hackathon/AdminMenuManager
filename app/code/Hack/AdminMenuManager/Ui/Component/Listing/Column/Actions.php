@@ -55,6 +55,14 @@ class Actions extends Column
                     'label' => __('Edit'),
                     'hidden' => false,
                 ];
+                $item[$this->getData('name')]['delete'] = [
+                    'href' => $this->urlBuilder->getUrl(
+                        'amm/view/delete',
+                        ['id' => $item['id']]
+                    ),
+                    'label' => __('Delete'),
+                    'hidden' => false,
+                ];
             }
         }
 
