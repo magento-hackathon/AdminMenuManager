@@ -6,6 +6,14 @@
             <item name="deps" xsi:type="string">amm_listing.amm_listing_data_source</item>
         </item>
         <item name="spinner" xsi:type="string">queue_export_columns</item>
+        <item name="buttons" xsi:type="array">
+            <item name="add" xsi:type="array">
+                <item name="name" xsi:type="string">add</item>
+                <item name="label" xsi:type="string" translate="true">Add New Mapping</item>
+                <item name="class" xsi:type="string">primary</item>
+                <item name="url" xsi:type="string">*/*/new</item>
+            </item>
+        </item>
     </argument>
     <dataSource name="amm_listing_data_source">
         <argument name="dataProvider" xsi:type="configurableObject">
