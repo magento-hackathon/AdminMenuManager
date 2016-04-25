@@ -125,7 +125,7 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
                 'name' => 'source',
                 'label' => __('Source'),
                 'title' => __('Source'),
-                'required' => false,
+                'required' => true,
                 'values' => $this->_getSourceTree()
             ]
         );

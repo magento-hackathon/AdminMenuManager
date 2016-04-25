@@ -4,6 +4,8 @@ namespace Hack\AdminMenuManager\Plugin;
 
 class MenuBuilder {
 
+    const AMM_MENU_ID = 'AMM_CUSTOM_ITEM::custom_';
+
     protected $_actionModel = null;
     protected $_itemFactory = null;
 
@@ -17,7 +19,7 @@ class MenuBuilder {
             switch ($menuConfig->getMapping()) {
                 case \Hack\AdminMenuManager\Helper\Action::ACTION_CREATE:
                     $menu->add($this->_itemFactory->create(array(
-                        'id'       => $menuConfig->getSource(),
+                        'id'       => self::AMM_MENU_ID . $menuConfig->getId(),
                         'title'    => $menuConfig->getTitle(),
                         'module'   => $menu->get($menuConfig->getTarget())->getModule(),
                         'resource' => $menu->get($menuConfig->getTarget())->getResource()
