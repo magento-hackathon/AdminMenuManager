@@ -15,6 +15,10 @@ class UpgradeSchema implements UpgradeSchemaInterface {
             $setup->run("ALTER TABLE `{$setup->getTable('amm_actions')}` ADD `sort_order` INT NOT NULL AFTER `icon`, ADD `target_type` INT UNSIGNED NOT NULL AFTER `sort_order`;");
         }
 
+        if (version_compare($context->getVersion(), '1.0.2') < 0) {
+            $setup->run("ALTER TABLE `{$setup->getTable('amm_actions')}` DROP `target_type`;");
+        }
+
         $setup->endSetup();
     }
 }

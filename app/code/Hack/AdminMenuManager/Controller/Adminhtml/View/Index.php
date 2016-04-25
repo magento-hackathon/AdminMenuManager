@@ -29,6 +29,23 @@ class Index extends \Magento\Backend\App\Action
 
     }
 
+    /**
+     * @return \Hack\AdminMenuManager\Model\Action
+     */
+    protected function _initCurrentAction()
+    {
+        /** @var \Hack\AdminMenuManager\Model\Action $action */
+        $action = $this->_objectManager->create('Hack\AdminMenuManager\Model\Action');
+        $actionId = $this->getRequest()->getParam('id', null);
+        if ($actionId) {
+            $action->load($actionId);
+        }
+
+        $this->_coreRegistry->register('current_amm_action', $action);
+
+        return $action;
+    }
+
     public function execute() {
         if ($this->getRequest()->getQuery('ajax')) {
             $resultForward = $this->_resultForwardFactory->create();

@@ -143,7 +143,7 @@
                 </item>
             </argument>
         </column>
-        <column name="target_type">
+        <!-- column name="target_type">
             <argument name="data" xsi:type="array">
                 <item name="options" xsi:type="object">Hack\AdminMenuManager\Helper\TargetType</item>
                 <item name="config" xsi:type="array">
@@ -154,7 +154,7 @@
                     <item name="sortOrder" xsi:type="number">40</item>
                 </item>
             </argument>
-        </column>
+        </column -->
         <column name="sort_order">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
