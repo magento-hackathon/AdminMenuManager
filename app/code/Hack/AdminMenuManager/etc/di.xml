@@ -5,4 +5,19 @@
     <type name="Magento\Backend\Model\Menu\Builder">
         <plugin name="Amm::afterGetResult" type="Hack\AdminMenuManager\Plugin\MenuBuilder" sortOrder="1000" disabled="false" />
     </type>
+
+
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="amm_listing_data_source"  xsi:type="string">Hack\AdminMenuManager\Model\Resource\Action\CollectionVirt</item>
+            </argument>
+        </arguments>
+    </type>
+    <virtualType name="Hack\AdminMenuManager\Model\Resource\Action\CollectionVirt" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">amm_actions</argument>
+            <argument name="resourceModel" xsi:type="string">Hack\AdminMenuManager\Model\Resource\Action</argument>
+        </arguments>
+    </virtualType>
 </config>

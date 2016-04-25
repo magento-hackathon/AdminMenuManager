@@ -20,7 +20,6 @@ class Index extends \Magento\Backend\App\Action
     }
 
     public function execute() {
-        die('aha');
         if ($this->getRequest()->getQuery('ajax')) {
             $resultForward = $this->_resultForwardFactory->create();
             $resultForward->forward('grid');
