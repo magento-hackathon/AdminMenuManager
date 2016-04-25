@@ -73,20 +73,20 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
         if(!count($this->_menuItemsValues)) {
             $menu = $this->_menuConfig->getMenu();
             $result = $this->_builder->getResult($menu);
-            $this->_getSourceTreeNode($result);
+            $dash = '';
+            $this->_getSourceTreeNode($result, $dash);
         }
 
         return $this->_menuItemsValues;
     }
 
-    protected function _getSourceTreeNode($node)
+    protected function _getSourceTreeNode($node, $dash)
     {
         foreach($node as $child) {
+            $this->_menuItemsValues[] = array('value' => $child->getId(), 'label' => $dash.$child->getTitle());
             if ($child->hasChildren()) {
-                $this->getSourceTreeNode($child);
+                $this->_getSourceTreeNode($child->getChildren(), $dash.='--');
             }
-            $this->_menuItemsValues[] = array('value' => $child->getId(), 'label' => $child->getTitle());
-
         }
     }
 
