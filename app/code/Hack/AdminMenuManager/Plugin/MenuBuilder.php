@@ -18,19 +18,20 @@ class MenuBuilder {
         foreach ($this->_actionModel->getCollection() as $menuConfig) {
             switch ($menuConfig->getMapping()) {
                 case \Hack\AdminMenuManager\Helper\Action::ACTION_CREATE:
+                    //$target = $menu->get($menuConfig->getTarget());
                     $menu->add($this->_itemFactory->create(array(
                         'id'       => self::AMM_MENU_ID . $menuConfig->getId(),
                         'title'    => $menuConfig->getTitle(),
-                        'module'   => $menu->get($menuConfig->getTarget())->getModule(),
-                        'resource' => $menu->get($menuConfig->getTarget())->getResource()
-                    )), $menuConfig->getTarget(), 10);
+                        'module'   => 'Magento_Customer',
+                        'resource' => $menuConfig->getTarget(),
+                    )), $menuConfig->getTarget(), $menuConfig->getSortOrder());
                     break;
                 case \Hack\AdminMenuManager\Helper\Action::ACTION_MOVE:
                     if ($menuConfig->getTarget()) {
                         $menu->move($menuConfig->getSource(), $menuConfig->getTarget(), $menuConfig->getSortOrder());
                     }
                     else {
-                        $menu->reorder($menuConfig->getSource(), 100);
+                        $menu->reorder($menuConfig->getSource(), $menuConfig->getSortOrder());
                     }
 
                     if ($menuConfig->getTitle()) {
@@ -53,7 +54,7 @@ class MenuBuilder {
         foreach ($menu as $parent) {
             foreach ($parent->getChildren() as $item) {
                 if (!$item->getAction() && !$item->hasChildren()) {
-                    $menu->remove($item->getId());
+                    //$menu->remove($item->getId()); // TODO: remove this comment
                 }
             }
         }
