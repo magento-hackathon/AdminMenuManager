@@ -14,9 +14,9 @@ class Edit extends \Magento\Backend\Block\Widget\Form\Container
     protected $_coreRegistry = null;
 
     /**
-     * @var int
+     * @var \Hack\AdminMenuManager\Model\Action
      */
-    protected $_actionId;
+    protected $_action;
 
     /**
      * @param \Magento\Backend\Block\Widget\Context $context
@@ -33,21 +33,21 @@ class Edit extends \Magento\Backend\Block\Widget\Form\Container
     }
 
     /**
-     * @param mixed $actionId
+     * @param \Hack\AdminMenuManager\Model\Action $action
      */
-    public function setActionId($actionId)
+    public function setAction(\Hack\AdminMenuManager\Model\Action $action)
     {
-        $this->_actionId = $actionId;
+        $this->_action = $action;
     }
 
     /**
      * Getter
      *
-     * @return \Magento\Variable\Model\Variable
+     * @return \Hack\AdminMenuManager\Model\Action
      */
-    public function getActionId()
+    public function getAction()
     {
-        return $this->_actionId;
+        return $this->_action;
     }
 
     /**
@@ -83,7 +83,7 @@ class Edit extends \Magento\Backend\Block\Widget\Form\Container
             ],
             100
         );
-        if (!$this->getActionId()) {
+        if (!$this->getAction()->getId()) {
             $this->removeButton('delete');
         }
         return parent::_prepareLayout();
@@ -96,7 +96,7 @@ class Edit extends \Magento\Backend\Block\Widget\Form\Container
     {
         $this->getChildBlock('form')
             ->setData('action', $this->getSaveUrl())
-            ->setActionId($this->getActionId());
+            ->setAction($this->getAction());
         return $this->getChildHtml('form');
     }
 
@@ -107,8 +107,8 @@ class Edit extends \Magento\Backend\Block\Widget\Form\Container
      */
     public function getHeaderText()
     {
-        if ($this->getActionId()) {
-            return __('Admin Menu Action "%1"', $this->escapeHtml($this->getActionId()));
+        if ($this->getAction()->getId()) {
+            return __('Admin Menu Action "%1"', $this->escapeHtml($this->getAction()->getId()));
         } else {
             return __('New Admin Menu Action');
         }

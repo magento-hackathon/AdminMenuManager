@@ -3,32 +3,25 @@ namespace Hack\AdminMenuManager\Block\Adminhtml\View\Edit;
 
 class Form extends \Magento\Backend\Block\Widget\Form\Generic
 {
-    protected $_actionId;
+    /**
+     * @var \Hack\AdminMenuManager\Model\Action
+     */
+    protected $_action;
 
     /**
-     * Getter
-     *
-     * @return \Magento\Variable\Model\Variable
+     * @param \Hack\AdminMenuManager\Model\Action $action
      */
-    public function getVariable()
+    public function setAction(\Hack\AdminMenuManager\Model\Action $action)
     {
-        return $this->_coreRegistry->registry('current_variable');
-    }
-
-    /**
-     * @param int $id
-     */
-    public function setActionId($id)
-    {
-        $this->_actionId = $id;
+        $this->_action = $action;
     }
 
     /**
      * @retur int
      */
-    public function getActionId()
+    public function getAction()
     {
-        return $this->_actionId;
+        return $this->_action;
     }
 
     /**
@@ -64,9 +57,9 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
         );
 
         $useDefault = false;
-        if ($this->getActionId() && $this->getVariable()->getStoreId()) {
-            $useDefault = !(bool)$this->getVariable()->getStoreHtmlValue();
-            $this->getVariable()->setUseDefaultValue((int)$useDefault);
+        if ($this->getAction()->getId() && $this->getAction()->getStoreId()) {
+            $useDefault = !(bool)$this->getAction()->getStoreHtmlValue();
+            $this->getAction()->setUseDefaultValue((int)$useDefault);
             $fieldset->addField(
                 'use_default_value',
                 'select',
@@ -102,7 +95,7 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
             ]
         );
 
-        $form->setValues($this->getVariable()->getData())->addFieldNameSuffix('variable')->setUseContainer(true);
+        $form->setValues($this->getAction()->getData())->addFieldNameSuffix('variable')->setUseContainer(true);
 
         $this->setForm($form);
         return parent::_prepareForm();

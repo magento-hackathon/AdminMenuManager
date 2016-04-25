@@ -17,8 +17,14 @@ class Edit extends Index
 
         /** @var \Hack\AdminMenuManager\Block\Adminhtml\View\Edit $block */
         $block = $resultPage->getLayout()->createBlock('Hack\AdminMenuManager\Block\Adminhtml\View\Edit');
-        $block->setActionId($this->getRequest()->getParam('action_id', null));
+
+        /** @var \Hack\AdminMenuManager\Model\Action $action */
+        $action = $this->_objectManager->create('Hack\AdminMenuManager\Model\Action');
+        $action->load($this->getRequest()->getParam('action_id', null));
+
+        $block->setAction($action);
 
         $resultPage->addContent($block);
+        return $resultPage;
     }
 }
