@@ -103,25 +103,13 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
         );
 
         $fieldset->addField(
-            'target_type',
-            'select',
-            [
-                'name' => 'target_type',
-                'label' => __('Target Type'),
-                'title' => __('Target Type'),
-                'required' => true,
-                'values' => $this->_targetTypeValues->getOptions()
-            ]
-        );
-
-        $fieldset->addField(
             'source',
             'select',
             [
                 'name' => 'source',
                 'label' => __('Source'),
                 'title' => __('Source'),
-                'required' => true,
+                'required' => false,
                 'values' => $this->_getSourceTree()
             ]
         );
@@ -133,7 +121,7 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
                 'name' => 'target',
                 'label' => __('Target'),
                 'title' => __('Target'),
-                'required' => true,
+                'required' => false,
                 'values' => array()
             ]
         );
