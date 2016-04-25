@@ -1,4 +1,5 @@
 <?php
+
 namespace Hack\AdminMenuManager\Controller\Adminhtml\View;
 
 class Index extends \Magento\Backend\App\Action

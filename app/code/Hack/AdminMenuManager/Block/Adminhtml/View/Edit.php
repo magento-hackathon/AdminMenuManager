@@ -1,5 +1,5 @@
 <?php
-namespace Hack\AdminMenuManager\Block\Hack\AdminMenuManager;
+namespace Hack\AdminMenuManager\Block\Adminhtml\View;
 
 /**
  * Admin Menu Action Edit Container
@@ -12,6 +12,11 @@ class Edit extends \Magento\Backend\Block\Widget\Form\Container
      * @var \Magento\Framework\Registry
      */
     protected $_coreRegistry = null;
+
+    /**
+     * @var int
+     */
+    protected $_actionId;
 
     /**
      * @param \Magento\Backend\Block\Widget\Context $context
@@ -28,6 +33,24 @@ class Edit extends \Magento\Backend\Block\Widget\Form\Container
     }
 
     /**
+     * @param mixed $actionId
+     */
+    public function setActionId($actionId)
+    {
+        $this->_actionId = $actionId;
+    }
+
+    /**
+     * Getter
+     *
+     * @return \Magento\Variable\Model\Variable
+     */
+    public function getActionId()
+    {
+        return $this->_actionId;
+    }
+
+    /**
      * Internal constructor
      *
      * @return void
@@ -39,16 +62,6 @@ class Edit extends \Magento\Backend\Block\Widget\Form\Container
         $this->_controller = 'system_variable';
 
         parent::_construct();
-    }
-
-    /**
-     * Getter
-     *
-     * @return \Magento\Variable\Model\Variable
-     */
-    public function getVariable()
-    {
-        return $this->_coreRegistry->registry('current_variable');
     }
 
     /**
@@ -70,24 +83,21 @@ class Edit extends \Magento\Backend\Block\Widget\Form\Container
             ],
             100
         );
-        if (!$this->getVariable()->getId()) {
+        if (!$this->getActionId()) {
             $this->removeButton('delete');
         }
         return parent::_prepareLayout();
     }
 
     /**
-     * Return form HTML
-     *
      * @return string
      */
     public function getFormHtml()
     {
-        $formHtml = parent::getFormHtml();
-        if (!$this->_storeManager->isSingleStoreMode() && $this->getVariable()->getId()) {
-            $formHtml = $formHtml;
-        }
-        return $formHtml;
+        $this->getChildBlock('form')
+            ->setData('action', $this->getSaveUrl())
+            ->setActionId($this->getActionId());
+        return $this->getChildHtml('form');
     }
 
     /**
@@ -97,10 +107,10 @@ class Edit extends \Magento\Backend\Block\Widget\Form\Container
      */
     public function getHeaderText()
     {
-        if ($this->getVariable()->getId()) {
-            return __('Custom Variable "%1"', $this->escapeHtml($this->getVariable()->getName()));
+        if ($this->getActionId()) {
+            return __('Admin Menu Action "%1"', $this->escapeHtml($this->getActionId()));
         } else {
-            return __('New Custom Variable');
+            return __('New Admin Menu Action');
         }
     }
 
