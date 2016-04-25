@@ -77,17 +77,6 @@ class Edit extends \Magento\Backend\Block\Widget\Form\Container
     }
 
     /**
-     * @return string
-     */
-    public function getFormHtml()
-    {
-        $this->getChildBlock('form')
-            ->setData('action', $this->getSaveUrl())
-            ->setAction($this->getAction());
-        return $this->getChildHtml('form');
-    }
-
-    /**
      * Return translated header text depending on creating/editing action
      *
      * @return \Magento\Framework\Phrase
