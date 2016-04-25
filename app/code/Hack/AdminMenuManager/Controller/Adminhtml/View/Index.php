@@ -4,6 +4,13 @@ namespace Hack\AdminMenuManager\Controller\Adminhtml\View;
 
 class Index extends \Magento\Backend\App\Action
 {
+    /**
+     * Core registry
+     *
+     * @var \Magento\Framework\Registry
+     */
+    protected $_coreRegistry;
+
     protected $_context;
 
     protected $_resultPageFactory;
@@ -12,10 +19,12 @@ class Index extends \Magento\Backend\App\Action
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
         \Magento\Backend\Model\View\Result\ForwardFactory $resultForwardFactory,
+        \Magento\Framework\Registry $coreRegistry,
         \Magento\Framework\View\Result\PageFactory $resultPageFactory) {
 
         $this->_resultPageFactory = $resultPageFactory;
         $this->_resultForwardFactory = $resultForwardFactory;
+        $this->_coreRegistry = $coreRegistry;
         parent::__construct($context);
 
     }

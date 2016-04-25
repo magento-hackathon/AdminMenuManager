@@ -3,25 +3,15 @@ namespace Hack\AdminMenuManager\Block\Adminhtml\View\Edit;
 
 class Form extends \Magento\Backend\Block\Widget\Form\Generic
 {
-    /**
-     * @var \Hack\AdminMenuManager\Model\Action
-     */
-    protected $_action;
 
     /**
-     * @param \Hack\AdminMenuManager\Model\Action $action
-     */
-    public function setAction(\Hack\AdminMenuManager\Model\Action $action)
-    {
-        $this->_action = $action;
-    }
-
-    /**
-     * @retur int
+     * Getter
+     *
+     * @return \Hack\AdminMenuManager\Model\Action
      */
     public function getAction()
     {
-        return $this->_action;
+        return $this->_coreRegistry->registry('current_amm_action');
     }
 
     /**

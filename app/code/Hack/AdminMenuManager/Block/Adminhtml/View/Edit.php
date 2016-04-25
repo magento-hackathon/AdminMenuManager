@@ -14,11 +14,6 @@ class Edit extends \Magento\Backend\Block\Widget\Form\Container
     protected $_coreRegistry = null;
 
     /**
-     * @var \Hack\AdminMenuManager\Model\Action
-     */
-    protected $_action;
-
-    /**
      * @param \Magento\Backend\Block\Widget\Context $context
      * @param \Magento\Framework\Registry $registry
      * @param array $data
@@ -33,21 +28,13 @@ class Edit extends \Magento\Backend\Block\Widget\Form\Container
     }
 
     /**
-     * @param \Hack\AdminMenuManager\Model\Action $action
-     */
-    public function setAction(\Hack\AdminMenuManager\Model\Action $action)
-    {
-        $this->_action = $action;
-    }
-
-    /**
      * Getter
      *
      * @return \Hack\AdminMenuManager\Model\Action
      */
     public function getAction()
     {
-        return $this->_action;
+        return $this->_coreRegistry->registry('current_amm_action');
     }
 
     /**
@@ -57,9 +44,9 @@ class Edit extends \Magento\Backend\Block\Widget\Form\Container
      */
     protected function _construct()
     {
-        $this->_objectId = 'variable_id';
-        $this->_blockGroup = 'Magento_Variable';
-        $this->_controller = 'system_variable';
+        $this->_objectId = 'action_id';
+        $this->_blockGroup = 'Hack_AdminMenuManager';
+        $this->_controller = 'adminhtml_view';
 
         parent::_construct();
     }
