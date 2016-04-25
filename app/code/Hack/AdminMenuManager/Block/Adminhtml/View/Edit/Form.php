@@ -138,42 +138,37 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
             ]
         );
 
-        $useDefault = false;
-        if ($this->getAction()->getId() && $this->getAction()->getStoreId()) {
-            $useDefault = !(bool)$this->getAction()->getStoreHtmlValue();
-            $this->getAction()->setUseDefaultValue((int)$useDefault);
-            $fieldset->addField(
-                'use_default_value',
-                'select',
-                [
-                    'name' => 'use_default_value',
-                    'label' => __('Use Default Variable Values'),
-                    'title' => __('Use Default Variable Values'),
-                    'onchange' => 'toggleValueElement(this);',
-                    'values' => [0 => __('No'), 1 => __('Yes')]
-                ]
-            );
-        }
-
         $fieldset->addField(
-            'html_value',
-            'textarea',
+            'title',
+            'text',
             [
-                'name' => 'html_value',
-                'label' => __('Variable HTML Value'),
-                'title' => __('Variable HTML Value'),
-                'disabled' => $useDefault
+                'name' => 'title',
+                'label' => __('Title'),
+                'title' => __('Title'),
+                'required' => false,
             ]
         );
 
         $fieldset->addField(
-            'plain_value',
-            'textarea',
+            'icon',
+            'file',
             [
-                'name' => 'plain_value',
-                'label' => __('Variable Plain Value'),
-                'title' => __('Variable Plain Value'),
-                'disabled' => $useDefault
+                'name' => 'icon',
+                'label' => __('Icon'),
+                'title' => __('Icon'),
+                'required' => false,
+                'class' => 'input-file'
+            ]
+        );
+
+        $fieldset->addField(
+            'sort_order',
+            'text',
+            [
+                'name' => 'sort_order',
+                'label' => __('Sort order'),
+                'title' => __('Sort order'),
+                'required' => false,
             ]
         );
 
