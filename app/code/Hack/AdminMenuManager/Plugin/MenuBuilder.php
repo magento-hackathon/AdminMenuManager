@@ -4,32 +4,57 @@ namespace Hack\AdminMenuManager\Plugin;
 
 class MenuBuilder {
 
+    protected $_actionModel = null;
     protected $_itemFactory = null;
 
-    public function __construct(\Magento\Backend\Model\Menu\Item\Factory $itemFactory) {
+    public function __construct(\Hack\AdminMenuManager\Model\Action $actionModel, \Magento\Backend\Model\Menu\Item\Factory $itemFactory) {
+        $this->_actionModel = $actionModel;
         $this->_itemFactory = $itemFactory;
     }
 
     public function afterGetResult(\Magento\Backend\Model\Menu\Builder $builder, \Magento\Backend\Model\Menu $menu) {
-        $menu->reorder('Magento_Backend::dashboard', 100);
+        foreach ($this->_actionModel->getCollection() as $menuConfig) {
+            switch ($menuConfig->getMapping()) {
+                case \Hack\AdminMenuManager\Helper\Action::ACTION_CREATE:
+                    $menu->add($this->_itemFactory->create(array(
+                        'id'       => $menuConfig->getSource(),
+                        'title'    => $menuConfig->getTitle(),
+                        'module'   => $menu->get($menuConfig->getTarget())->getModule(),
+                        'resource' => $menu->get($menuConfig->getTarget())->getResource()
+                    )), $menuConfig->getTarget(), 10);
+                    break;
+                case \Hack\AdminMenuManager\Helper\Action::ACTION_MOVE:
+                    if ($menuConfig->getTarget()) {
+                        $menu->move($menuConfig->getSource(), $menuConfig->getTarget(), $menuConfig->getSortOrder());
+                    }
+                    else {
+                        $menu->reorder($menuConfig->getSource(), 100);
+                    }
 
-        $menu->add($this->_itemFactory->create(array(
-            'id'       => 'Magento_Customer::CustomerBasic',
-            'title'    => 'Customer - basic',
-            'module'   => 'Magento_Customer',
-            'resource' => 'Magento_Customer::customer'
-        )), 'Magento_Customer::customer', 10);
+                    if ($menuConfig->getTitle()) {
+                        $menu->get($menuConfig->getSource())
+                            ->setTitle($menuConfig->getTitle());
+                    }
 
-        $menu->add($this->_itemFactory->create(array(
-            'id'       => 'Magento_Customer::CustomerGroups',
-            'title'    => 'Customer - groups',
-            'module'   => 'Magento_Customer',
-            'resource' => 'Magento_Customer::customer'
-        )), 'Magento_Customer::customer', 20);
+                    break;
+                case \Hack\AdminMenuManager\Helper\Action::ACTION_RENAME:
+                    $menu->get($menuConfig->getSource())
+                        ->setTitle($menuConfig->getTitle());
+                    break;
+                case \Hack\AdminMenuManager\Helper\Action::ACTION_HIDE:
+                    $menu->remove($menuConfig->getSource());
+                    break;
+            }
+        }
 
-        $menu->move('Magento_Customer::customer_manage', 'Magento_Customer::CustomerBasic', 10);
-        $menu->move('Magento_Customer::customer_online', 'Magento_Customer::CustomerBasic', 20);
-        $menu->move('Magento_Customer::customer_group', 'Magento_Customer::CustomerGroups', 10);
+        // Removing empty menu items without actions (empty parents)
+        foreach ($menu as $parent) {
+            foreach ($parent->getChildren() as $item) {
+                if (!$item->getAction() && !$item->hasChildren()) {
+                    $menu->remove($item->getId());
+                }
+            }
+        }
 
         return $menu;
     }
