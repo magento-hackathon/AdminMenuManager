@@ -9,11 +9,9 @@
     <acl>
         <resources>
             <resource id="Magento_Backend::admin">
-                <resource id="Magento_Backend::stores">
-                    <resource id="Magento_Backend::stores_settings">
-                        <resource id="Magento_Config::config">
-                            <resource id="Hack_AdminMenuManager::amm" title="Admin Menu Manager Mappings" />
-                        </resource>
+                <resource id="Magento_Backend::system">
+                    <resource id="Magento_Backend::tools">
+                        <resource id="Hack_AdminMenuManager::amm" title="Admin Menu Manager Mappings" />
                     </resource>
                 </resource>
             </resource>
