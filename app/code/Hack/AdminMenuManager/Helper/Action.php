@@ -11,10 +11,10 @@ class Action extends \Magento\Framework\App\Helper\AbstractHelper   implements \
     {
         $res = [];
 
-        $res[] = ['value' => self::ACTION_CREATE, 'label' => 'Create'];
-        $res[] = ['value' => self::ACTION_MOVE, 'label' => 'Move'];
-        $res[] = ['value' => self::ACTION_RENAME, 'label' => 'Rename'];
-        $res[] = ['value' => self::ACTION_HIDE, 'label' => 'Hide'];
+        $res[] = ['value' => self::ACTION_CREATE, 'label' => 'Create item'];
+        $res[] = ['value' => self::ACTION_MOVE, 'label' => 'Move item'];
+        $res[] = ['value' => self::ACTION_RENAME, 'label' => 'Rename item'];
+        $res[] = ['value' => self::ACTION_HIDE, 'label' => 'Hide item'];
 
         return $res;
     }
