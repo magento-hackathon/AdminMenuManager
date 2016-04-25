@@ -97,7 +97,7 @@ class Edit extends \Magento\Backend\Block\Widget\Form\Container
      */
     public function getValidationUrl()
     {
-        return $this->getUrl('adminhtml/*/validate', ['_current' => true]);
+        return '';
     }
 
     /**
@@ -107,7 +107,7 @@ class Edit extends \Magento\Backend\Block\Widget\Form\Container
      */
     public function getSaveUrl()
     {
-        return $this->getUrl('adminhtml/*/save', ['_current' => true, 'back' => null]);
+        return $this->getUrl('amm/*/save', ['_current' => true, 'back' => null]);
     }
 
     /**
@@ -117,6 +117,6 @@ class Edit extends \Magento\Backend\Block\Widget\Form\Container
      */
     public function getSaveAndContinueUrl()
     {
-        return $this->getUrl('adminhtml/*/save', ['_current' => true, 'back' => 'edit']);
+        return $this->getUrl('amm/*/save', ['_current' => true, 'back' => 'edit']);
     }
 }

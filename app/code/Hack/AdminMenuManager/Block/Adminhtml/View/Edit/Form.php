@@ -13,6 +13,8 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
      */
     protected $_targetTypeValues;
 
+    protected $_menuItemsValues = array();
+
     /**
      * @var  \Magento\Backend\Model\Menu\Builder
      */
@@ -68,10 +70,24 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
 
     protected function _getSourceTree()
     {
-        $menu = $this->_menuConfig->getMenu();
-        $result = $this->_builder->getResult($menu);
+        if(!count($this->_menuItemsValues)) {
+            $menu = $this->_menuConfig->getMenu();
+            $result = $this->_builder->getResult($menu);
+            $this->_getSourceTreeNode($result);
+        }
 
-        return array();
+        return $this->_menuItemsValues;
+    }
+
+    protected function _getSourceTreeNode($node)
+    {
+        foreach($node as $child) {
+            if ($child->hasChildren()) {
+                $this->getSourceTreeNode($child);
+            }
+            $this->_menuItemsValues[] = array('value' => $child->getId(), 'label' => $child->getTitle());
+
+        }
     }
 
     /**
@@ -103,25 +119,13 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
         );
 
         $fieldset->addField(
-            'target_type',
-            'select',
-            [
-                'name' => 'target_type',
-                'label' => __('Target Type'),
-                'title' => __('Target Type'),
-                'required' => true,
-                'values' => $this->_targetTypeValues->getOptions()
-            ]
-        );
-
-        $fieldset->addField(
             'source',
             'select',
             [
                 'name' => 'source',
                 'label' => __('Source'),
                 'title' => __('Source'),
-                'required' => true,
+                'required' => false,
                 'values' => $this->_getSourceTree()
             ]
         );
@@ -133,8 +137,8 @@ class Form extends \Magento\Backend\Block\Widget\Form\Generic
                 'name' => 'target',
                 'label' => __('Target'),
                 'title' => __('Target'),
-                'required' => true,
-                'values' => array()
+                'required' => false,
+                'values' => $this->_getSourceTree()
             ]
         );
 
